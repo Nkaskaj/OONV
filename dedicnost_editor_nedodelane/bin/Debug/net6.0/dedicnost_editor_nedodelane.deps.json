@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "dedicnost_editor_nedodelane/1.0.0": {
+        "runtime": {
+          "dedicnost_editor_nedodelane.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "dedicnost_editor_nedodelane/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

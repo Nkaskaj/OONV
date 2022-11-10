@@ -1,0 +1,15 @@
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\bin\Debug\net6.0\dedicnost_rpg.exe
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\bin\Debug\net6.0\dedicnost_rpg.deps.json
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\bin\Debug\net6.0\dedicnost_rpg.runtimeconfig.json
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\bin\Debug\net6.0\dedicnost_rpg.dll
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\bin\Debug\net6.0\dedicnost_rpg.pdb
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.AssemblyInfo.cs
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.dll
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\refint\dedicnost_rpg.dll
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.pdb
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\dedicnost_rpg.genruntimeconfig.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_rpg\obj\Debug\net6.0\ref\dedicnost_rpg.dll

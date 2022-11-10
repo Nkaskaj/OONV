@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "singleton_prototype_builder/1.0.0": {
+        "runtime": {
+          "singleton_prototype_builder.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "singleton_prototype_builder/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

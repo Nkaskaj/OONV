@@ -1,0 +1,15 @@
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\bin\Debug\net6.0\dedicnost_editor_nedodelane.exe
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\bin\Debug\net6.0\dedicnost_editor_nedodelane.deps.json
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\bin\Debug\net6.0\dedicnost_editor_nedodelane.runtimeconfig.json
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\bin\Debug\net6.0\dedicnost_editor_nedodelane.dll
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\bin\Debug\net6.0\dedicnost_editor_nedodelane.pdb
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.AssemblyInfo.cs
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.dll
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\refint\dedicnost_editor_nedodelane.dll
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.pdb
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\dedicnost_editor_nedodelane.genruntimeconfig.cache
+C:\Users\PC\Desktop\Škola\OONV\dedicnost_editor_nedodelane\obj\Debug\net6.0\ref\dedicnost_editor_nedodelane.dll
