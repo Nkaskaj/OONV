@@ -1,0 +1,15 @@
+C:\Users\PC\Desktop\Škola\OONV\zapocet\bin\Debug\net6.0\zapocet.exe
+C:\Users\PC\Desktop\Škola\OONV\zapocet\bin\Debug\net6.0\zapocet.deps.json
+C:\Users\PC\Desktop\Škola\OONV\zapocet\bin\Debug\net6.0\zapocet.runtimeconfig.json
+C:\Users\PC\Desktop\Škola\OONV\zapocet\bin\Debug\net6.0\zapocet.dll
+C:\Users\PC\Desktop\Škola\OONV\zapocet\bin\Debug\net6.0\zapocet.pdb
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.AssemblyInfo.cs
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.dll
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\refint\zapocet.dll
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.pdb
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.genruntimeconfig.cache
+C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\ref\zapocet.dll
