@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "proxy_decorator/1.0.0": {
+        "runtime": {
+          "proxy_decorator.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "proxy_decorator/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

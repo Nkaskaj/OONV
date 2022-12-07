@@ -1,0 +1,15 @@
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\bin\Debug\net6.0\proxy_decorator.exe
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\bin\Debug\net6.0\proxy_decorator.deps.json
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\bin\Debug\net6.0\proxy_decorator.runtimeconfig.json
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\bin\Debug\net6.0\proxy_decorator.dll
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\bin\Debug\net6.0\proxy_decorator.pdb
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.csproj.AssemblyReference.cache
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.AssemblyInfoInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.AssemblyInfo.cs
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.dll
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\refint\proxy_decorator.dll
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.pdb
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\proxy_decorator.genruntimeconfig.cache
+C:\Users\PC\Desktop\Škola\OONV\proxy_decorator\obj\Debug\net6.0\ref\proxy_decorator.dll
