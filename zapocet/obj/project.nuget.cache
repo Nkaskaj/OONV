@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "/reXKwzTSZhyK9jm1M1RP4/+ZtIpw9aZA9ajRT9315TUXOaBUuOfMA75qoRvXz2tnrEOxydc6s5ZH0PjZ0t4ow==",
+  "dgSpecHash": "apVvis9UZtHud3/z/gXJJ9nwT1RXD+P7zsS2KS87OKzS8tmtXNlQO8Jx7JunAj8BdphXVi5FzKqz/C5VAVVAmg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PC\\Desktop\\Škola\\OONV\\zapocet\\zapocet.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "X:\\Windows složky\\Desktop\\OONV\\zapocet\\zapocet.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Písek\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.11\\microsoft.netcore.app.ref.6.0.11.nupkg.sha512",
+    "C:\\Users\\Písek\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.11\\microsoft.windowsdesktop.app.ref.6.0.11.nupkg.sha512",
+    "C:\\Users\\Písek\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.11\\microsoft.aspnetcore.app.ref.6.0.11.nupkg.sha512",
+    "C:\\Users\\Písek\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.11\\microsoft.netcore.app.host.win-x64.6.0.11.nupkg.sha512"
+  ],
   "logs": []
 }

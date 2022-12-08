@@ -13,3 +13,18 @@ C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\refint\zapocet.dll
 C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.pdb
 C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\zapocet.genruntimeconfig.cache
 C:\Users\PC\Desktop\Škola\OONV\zapocet\obj\Debug\net6.0\ref\zapocet.dll
+X:\Windows složky\Desktop\OONV\zapocet\bin\Debug\net6.0\zapocet.exe
+X:\Windows složky\Desktop\OONV\zapocet\bin\Debug\net6.0\zapocet.deps.json
+X:\Windows složky\Desktop\OONV\zapocet\bin\Debug\net6.0\zapocet.runtimeconfig.json
+X:\Windows složky\Desktop\OONV\zapocet\bin\Debug\net6.0\zapocet.dll
+X:\Windows složky\Desktop\OONV\zapocet\bin\Debug\net6.0\zapocet.pdb
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.csproj.AssemblyReference.cache
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.GeneratedMSBuildEditorConfig.editorconfig
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.AssemblyInfoInputs.cache
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.AssemblyInfo.cs
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.csproj.CoreCompileInputs.cache
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.dll
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\refint\zapocet.dll
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.pdb
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\zapocet.genruntimeconfig.cache
+X:\Windows složky\Desktop\OONV\zapocet\obj\Debug\net6.0\ref\zapocet.dll
