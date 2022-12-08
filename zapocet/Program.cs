@@ -43,7 +43,7 @@ namespace zapocet{
             data.Add("hrob", hrob);
 
             while(run == true){
-                inventar = MainMenu(data);
+                MainMenu(data);
                 stageRun = true;
                 while(stageRun == true){
                     lukSkip = false;
@@ -83,7 +83,7 @@ namespace zapocet{
                     run = false;
                 }else{
                     data["stage"] += 1;
-                    (dropped, data["drops"]) = Drop(data, false);
+                    data = Drop(data, false);
                     foreach(string item in dropped){
                         data["inventar"].Add(item);
                     }
@@ -95,7 +95,7 @@ namespace zapocet{
                 }
                 
                 if(data["stage"] == 4) {run = false;}
-                //Equipy->Select->Postavy + Zpět->Chcete vyměnit X za Y? + Zpět (Pokud Unique na postavu, rovnou vyměnit X za Y), fighty po jednom + přeskočit, opravit giveall
+                //itemy - staty, fighty po jednom + přeskočit
                 //Itemy: Armor Ts, Zbrane Ts, Stit Ts
             }
             if(lose){
@@ -103,6 +103,10 @@ namespace zapocet{
             }else{
                 System.Console.WriteLine("VYHRAL SI!");
             }
+        }
+
+        public static void Game(Dictionary<dynamic, dynamic> data, bool run, bool stageRun, bool lukSkip, bool lose, int stage, List<Postava> monstraList, MonsterVojakBuilder monsterBuilder, Kasarna kasarna, List<string> dropped){
+            
         }
 
         public static void Round(Postava postava1, Postava postava2){
@@ -253,7 +257,7 @@ namespace zapocet{
             Console.ReadLine();
         }
 
-        public static List<string> MainMenu(Dictionary<dynamic, dynamic> data){
+        public static void MainMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             System.Console.WriteLine("   ---> Menu <---   ");
             System.Console.WriteLine("1) Spustit stage " + data["stage"]);
@@ -266,30 +270,30 @@ namespace zapocet{
             switch(Console.ReadLine()){
                 case "1":
                 case "+":
-                    return data["inventar"];
+                    return;
                 case "2":
                 case "ě":
                     InventarMenu(data);
-                    return data["inventar"];
+                    return;
                 case "3":
                 case "š":
                     HracuvInventar(data);
-                    return data["inventar"];
+                    return;
                 case "4":
                 case "č":
                     ChancesMenu(data);
-                    return data["inventar"];
+                    return;
                 case "5":
                 case "ř":
                     RulesMenu(data);
-                    return data["inventar"];
+                    return;
                 case "giveall":
-                    (data["inventar"], data["drops"]) = Drop(data, true);
+                    data = Drop(data, true);
                     MainMenu(data);
-                    return data["inventar"];
+                    return;
                 default:
                     MainMenu(data);
-                    return data["inventar"];
+                    return;
             }
         }
 
@@ -312,12 +316,14 @@ namespace zapocet{
             key = Parser(input);
             if(key == i+1){
                 MainMenu(data);
+                return;
             }else if(key == 0 || key > i+1){
                 InventarMenu(data);
+                return;
             }else{
                 InventarONMenu(data["lidiList"][key-1], data);
+                return;
             }
-            
         }
 
         public static void InventarONMenu(Postava clovek, Dictionary<dynamic, dynamic> data){
@@ -358,8 +364,6 @@ namespace zapocet{
                 System.Console.WriteLine("Toulec: " + postava.inventar["Toulec"]);
             }
         }
-
-        
 
         public static void ChancesMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
@@ -425,6 +429,7 @@ namespace zapocet{
             System.Console.WriteLine("   ---> Inventář <---   ");
             System.Console.WriteLine();
             List<string> sortedInventar = new List<string>();
+            sortedInventar.Clear();
             bool active = true;
             bool passive = true;
             int i = 0;
@@ -458,27 +463,38 @@ namespace zapocet{
             key = Parser(input);
             if(key == i + 1){
                 MainMenu(data);
+                return;
             }else if(key == 0 || key > i + 1){
                 HracuvInventar(data);
+                return;
             }else{
                 UseItem(sortedInventar[key-1], data);
-                HracuvInventar(data);
+                return;
             }
+            return;
         }
 
         public static void UseItem(string item, Dictionary<dynamic, dynamic> data){
+            bool used = false;
             if(item.Substring(0,1) == "▲"){
                 if(item == "▲ Lektvar obnovy"){
                     FullRegen(data["lidiList"]);
+                    data["inventar"].Remove(item);
+                    HracuvInventar(data);
+                    return;
                 }
                 else if(item == "▲ Pomocník"){
                     Companion(data["lidiList"]);
+                    data["inventar"].Remove(item);
+                    HracuvInventar(data);
+                    return;
                 }
                 else if(item == "▲ Kámen vzkříšení"){
                     Console.Clear();
                     int i = 0;
                     int key = 0;
                     string input;
+                    System.Console.WriteLine("   ---> Vyberte postavu na kterou chcete vzkřísit <---   ");
                     foreach(Postava clovek in data["hrob"]){
                         i++;
                         System.Console.WriteLine(i.ToString() + ") " + clovek.jmeno + " [" + clovek.hp + "]");
@@ -492,16 +508,112 @@ namespace zapocet{
                     key = Parser(input);
                     if(key == i+1){
                         HracuvInventar(data);
+                        return;
                     }else if(key == 0 || key > i+1){
                         UseItem(item, data);
+                        data["inventar"].Remove(item);
+                        return;
                     }else{
                         Revive(data["lidiList"], data["hrob"][key-1]);
+                        HracuvInventar(data);
+                        return;
                     }
                 }
             }else{
-
+                if(item.Substring(0,3) == "Luk" || item.Substring(0,3) == "Scr" || item.Substring(0,3) == "Ští"){
+                    Postava selectedClovek = data["lidiList"][data["lidiList"].IndexOf(ClassFinder(data["lidiList"], item))];
+                    string olditem = TypeFinder(selectedClovek, item, true);
+                    AcceptChange(data,selectedClovek,item,olditem);
+                    return;
+                }else{
+                    SelectPostava(data, item);
+                    return;
+                }
             }
-            data["inventar"].Remove(item);
+            return;
+        }
+
+        public static void SelectPostava(Dictionary<dynamic, dynamic> data, string item){
+            Console.Clear();
+            int i = 0;
+            int key = 0;
+            string input;
+            string olditem;
+            List<string> olditems = new List<string>();
+            System.Console.WriteLine("   ---> Vyberte postavu na kterou chcete nasadit " + item + " <---   ");
+            foreach(Postava clovek in data["lidiList"]){
+                i++;
+                olditem = TypeFinder(clovek, item, true);
+                olditems.Add(olditem);
+                System.Console.WriteLine(i.ToString() + ") " + clovek.jmeno + " (" + olditem + ")" );
+            }
+            System.Console.WriteLine((i+1).ToString() + ") Zpět");
+            System.Console.WriteLine();
+            while(true){
+                input = Console.ReadLine();
+                if(input != ""){break;}
+            }
+            key = Parser(input);
+            if(key == i+1){
+                HracuvInventar(data);
+                return;
+            }else if(key == 0 || key > i+1){
+                SelectPostava(data, item);
+                return;
+            }else{
+                AcceptChange(data, data["lidiList"][key-1], item, olditems[key-1]);
+                return;
+            }
+        }
+        
+        public static void AcceptChange(Dictionary<dynamic, dynamic> data, Postava clovek, string item, string olditem){
+            Console.Clear();
+            System.Console.WriteLine("1) Potvrdit");
+            System.Console.WriteLine("2) Zpět");
+            System.Console.WriteLine();
+            System.Console.WriteLine("Opravdu chcete vyměnit " + olditem + " za " + item + " na postavě " + clovek.jmeno + "?");
+            switch(Console.ReadLine()){
+                case "1":
+                case "+":
+                    data["lidiList"][data["lidiList"].IndexOf(clovek)].inventar[TypeFinder(clovek,item,false)] = item;
+                    data["inventar"].Remove(item);
+                    HracuvInventar(data);
+                    return;
+                case "2":
+                case "ě":
+                    HracuvInventar(data);
+                    return;
+                default:
+                    AcceptChange(data, clovek, item, olditem);
+                    return;
+            }
+        }
+
+        public static Postava ClassFinder(List<Postava> list, string item){
+            foreach(Postava clovek in list){
+                foreach(KeyValuePair<string,string> kvp in clovek.inventar){
+                    if(kvp.Value.Length > 2){
+                        if(kvp.Value.Substring(0,3) == item.Substring(0,3)){
+                            return clovek;
+                        }
+                    }
+                }
+            }
+            return list[0];
+        }
+
+        public static string TypeFinder(Postava clovek, string item, bool value){
+            foreach(KeyValuePair<string, string> olditem in clovek.inventar){
+                if(olditem.Value.Length > 2){
+                    if(olditem.Value.Substring(0,3) == item.Substring(0,3)){
+                        if(value){
+                            return olditem.Value;
+                        }
+                    return olditem.Key;
+                    }
+                }
+            }
+            return "???";
         }
 
         public static void StageResult(List<Postava> list, List<string> drops){
@@ -610,14 +722,14 @@ namespace zapocet{
                 if(input == "ý"){ if(jednotky.Length > 0){desitky="7";}else{jednotky="7";};}
                 if(input == "á"){ if(jednotky.Length > 0){desitky="8";}else{jednotky="8";};}
                 if(input == "í"){ if(jednotky.Length > 0){desitky="9";}else{jednotky="9";};}
+                if(input == "é"){ if(jednotky.Length > 0){desitky="0";}else{jednotky="0";};}
                 if(i==rounds-1){ return Int32.Parse(jednotky+desitky);}
                 if(rounds==2){input=input2;}
             }
             return 0;
         }
 
-        public static (List<string>, List<List<string>>) Drop(Dictionary<dynamic, dynamic> data, bool giveall){
-            List<string> dropped = new List<string>();
+        public static Dictionary<dynamic, dynamic> Drop(Dictionary<dynamic, dynamic> data, bool giveall){
             string drop;
             int chance = Roll();
             int numberOfDrops = 1;
@@ -633,13 +745,13 @@ namespace zapocet{
                 if(data["drops"][2].Count == 0){ chance = 97;}
                 if(data["drops"][3].Count == 0 && data["drops"][2].Count == 0 && data["drops"][1].Count == 0 && data["drops"][0].Count == 0){ chance = 101;}
                 if(chance == 101){break;}
-                if(data["drops"][3].Count != 0){if(chance >= 97){ drop=DropSelect(data["drops"][3]); dropped.Add(drop); data["drops"][3].Remove(drop); continue;}}
-                if(data["drops"][2].Count != 0){if(chance >= 90){ drop=DropSelect(data["drops"][2]); dropped.Add(drop); data["drops"][2].Remove(drop); continue;}}
-                if(data["drops"][1].Count != 0){if(chance >= 75){ drop=DropSelect(data["drops"][1]); dropped.Add(drop); data["drops"][1].Remove(drop); continue;}}
-                if(data["drops"][0].Count != 0){drop=DropSelect(data["drops"][0]); dropped.Add(drop); data["drops"][0].Remove(drop);}
+                if(data["drops"][3].Count != 0){if(chance >= 97){ drop=DropSelect(data["drops"][3]); data["inventar"].Add(drop); data["drops"][3].Remove(drop); continue;}}
+                if(data["drops"][2].Count != 0){if(chance >= 90){ drop=DropSelect(data["drops"][2]); data["inventar"].Add(drop); data["drops"][2].Remove(drop); continue;}}
+                if(data["drops"][1].Count != 0){if(chance >= 75){ drop=DropSelect(data["drops"][1]); data["inventar"].Add(drop); data["drops"][1].Remove(drop); continue;}}
+                if(data["drops"][0].Count != 0){drop=DropSelect(data["drops"][0]); data["inventar"].Add(drop); data["drops"][0].Remove(drop);}
             }
             data["drops"] = DropReplenish(data["drops"]);
-            return (dropped, data["drops"]);
+            return data;
 
         }
 
@@ -656,12 +768,12 @@ namespace zapocet{
                 if(i<4){
                     if(drop.Count == 0){
                         if(i==1){drop.Insert(0, "▲ Lektvar obnovy");}
-                        if(i==2){drop.Insert(0, "▲ Pomocník [Tier 1]");}
+                        if(i==2){drop.Insert(0, "▲ Pomocník");}
                         if(i==3){drop.Insert(0, "▲ Kámen vzkříšení");}
                     }
                     else if(drop[0].Substring(0, 1) != "▲"){
                         if(i==1){drop.Insert(0, "▲ Lektvar obnovy");}
-                        if(i==2){drop.Insert(0, "▲ Pomocník [Tier 1]");}
+                        if(i==2){drop.Insert(0, "▲ Pomocník");}
                         if(i==3){drop.Insert(0, "▲ Kámen vzkříšení");}
                     }
                 }
