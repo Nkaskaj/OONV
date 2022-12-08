@@ -11,6 +11,9 @@ namespace zapocet{
             bool stageRun = true;
             int stage = 1;
             bool lukSkip = false;
+            bool skip = false;
+            bool skipAn = false;
+            string input;
 
             List<string> dropped = new List<string>();
             List<string> drops1 = new List<string>() {"▲ Lektvar obnovy", "Přilba [Tier 2]", "Přilba [Tier 2]", "Přilba [Tier 2]", "Brnění [Tier 2]", "Brnění [Tier 2]", "Brnění [Tier 2]", "Chrániče [Tier 2]", "Chrániče [Tier 2]", "Chrániče [Tier 2]", "Meč [Tier 2]", "Meč [Tier 2]", "Meč [Tier 2]", "Štít [Tier 2]", "Luk [Tier 2]", "Scroll [Tier 2]"};
@@ -44,7 +47,10 @@ namespace zapocet{
 
             while(run == true){
                 MainMenu(data);
+                Console.Clear();
                 stageRun = true;
+                skip = false;
+                skipAn = false;
                 while(stageRun == true){
                     lukSkip = false;
 
@@ -57,6 +63,9 @@ namespace zapocet{
                         Spell(data["lidiList"][0], monstraList[0]);
                         stageRun = WinCheck(monstraList,data["lidiList"],data["hrob"]);
 
+                        if(skipAn == false){System.Console.WriteLine(); System.Console.WriteLine("Stiskni [Enter] pro další souboj nebo 1 pro dokončení stage!"); skipAn=true;}
+                        if(skip == false){input = Console.ReadLine(); if(input == "1" || input == "+"){skip = true;}}
+                        
                         if(stageRun == false) {break;}
                        
                         Round(monstraList[0], data["lidiList"][0]);
@@ -64,6 +73,7 @@ namespace zapocet{
                         if(stageRun == false) {break;}
                         Spell(monstraList[0], data["lidiList"][0]);
                         stageRun = WinCheck(data["lidiList"],monstraList,data["hrob"]);
+                        if(skip == false){input = Console.ReadLine(); if(input == "1" || input == "+"){skip = true;}}
                     }
                     stageRun = WinCheck(data["lidiList"],monstraList,data["hrob"]);
                     stageRun = WinCheck(monstraList,data["lidiList"],data["hrob"]);
@@ -83,10 +93,8 @@ namespace zapocet{
                     run = false;
                 }else{
                     data["stage"] += 1;
-                    data = Drop(data, false);
-                    foreach(string item in dropped){
-                        data["inventar"].Add(item);
-                    }
+                    dropped.Clear();
+                    (dropped, data) = Drop(data, false, dropped);
                     
                     StageResult(data["lidiList"], dropped);
                     Console.ReadLine();
@@ -95,8 +103,7 @@ namespace zapocet{
                 }
                 
                 if(data["stage"] == 4) {run = false;}
-                //itemy - staty, fighty po jednom + přeskočit
-                //Itemy: Armor Ts, Zbrane Ts, Stit Ts
+                //Balance, pravidla
             }
             if(lose){
                 System.Console.WriteLine("PROHRAL SI!");
@@ -144,7 +151,9 @@ namespace zapocet{
             double reduction= 0.0;
             int dmg = 0;
             int rawDMG = 0;
-            int luk = Int32.Parse(postava1.inventar["Luk"].Substring(postava1.inventar["Luk"].Length - 2, 1));
+            int luk = 0;
+            if(postava1.inventar["Luk"].Substring(postava1.inventar["Luk"].Length - 2, 1) == "y"){ luk = 4;}
+            else{luk=Int32.Parse(postava1.inventar["Luk"].Substring(postava1.inventar["Luk"].Length - 2, 1));}
             int toulec1 = Int32.Parse(postava1.inventar["Toulec"]);
             int toulec2 = Int32.Parse(postava2.inventar["Toulec"]);
 
@@ -163,7 +172,9 @@ namespace zapocet{
             double reduction= 0.0;
             int dmg = 0;
             int rawDMG = 0;
-            int scroll = Int32.Parse(postava1.inventar["Scroll"].Substring(postava1.inventar["Scroll"].Length - 2, 1));
+            int scroll = 0;
+            if(postava1.inventar["Scroll"].Substring(postava1.inventar["Scroll"].Length - 2, 1) == "y"){ scroll = 4;}
+            else{scroll=Int32.Parse(postava1.inventar["Scroll"].Substring(postava1.inventar["Scroll"].Length - 2, 1));}
 
             rawDMG = 60 * scroll;
             reduction = 3.0 / ( 3.0 + Convert.ToDouble(postava2.armor));
@@ -288,7 +299,8 @@ namespace zapocet{
                     RulesMenu(data);
                     return;
                 case "giveall":
-                    data = Drop(data, true);
+                    List<string> dropped = new List<string>();
+                    (dropped, data) = Drop(data, true, dropped);
                     MainMenu(data);
                     return;
                 default:
@@ -350,19 +362,20 @@ namespace zapocet{
             System.Console.WriteLine(postava.inventar["Přilba"]);
             System.Console.WriteLine(postava.inventar["Brnění"]);
             System.Console.WriteLine(postava.inventar["Chrániče"]);
-            System.Console.WriteLine(postava.inventar["Zbraň"]);
+            System.Console.WriteLine(postava.inventar["Zbraň"] + " (" + postava.mindmg.ToString() + "-" + postava.maxdmg.ToString() + ")");
             if(postava.inventar["Štít"] != ""){
-                System.Console.WriteLine(postava.inventar["Štít"]);
+                System.Console.WriteLine(postava.inventar["Štít"] + " (" + postava.dodge.ToString() + " %)");
             }
             if(postava.inventar["Scroll"] != ""){
-                System.Console.WriteLine(postava.inventar["Scroll"]);
+                System.Console.WriteLine(postava.inventar["Scroll"] + " (" + (60*Int32.Parse(postava.inventar["Scroll"].Substring(postava.inventar["Scroll"].Length - 2, 1))).ToString() + " damage)");
             }
             if(postava.inventar["Luk"] != ""){
-                System.Console.WriteLine(postava.inventar["Luk"]);
+                System.Console.WriteLine(postava.inventar["Luk"] + " (" + (30*Int32.Parse(postava.inventar["Luk"].Substring(postava.inventar["Luk"].Length - 2, 1))).ToString() + " damage)");
             }
             if(postava.inventar["Luk"] != ""){
                 System.Console.WriteLine("Toulec: " + postava.inventar["Toulec"]);
             }
+            System.Console.WriteLine("Armor: " + postava.armor.ToString());
         }
 
         public static void ChancesMenu(Dictionary<dynamic, dynamic> data){
@@ -575,8 +588,10 @@ namespace zapocet{
             switch(Console.ReadLine()){
                 case "1":
                 case "+":
-                    data["lidiList"][data["lidiList"].IndexOf(clovek)].inventar[TypeFinder(clovek,item,false)] = item;
+                    string type = TypeFinder(clovek,item,false);
+                    data["lidiList"][data["lidiList"].IndexOf(clovek)].inventar[type] = item;
                     data["inventar"].Remove(item);
+                    CalcStat(clovek, item, type, olditem);
                     HracuvInventar(data);
                     return;
                 case "2":
@@ -614,6 +629,29 @@ namespace zapocet{
                 }
             }
             return "???";
+        }
+
+        public static void CalcStat(Postava clovek, string item, string type, string olditem){
+            if(item.Substring(0,3) == "Luk" || item.Substring(0,3) == "Scr"){ return;}
+            if(item.Substring(0,3) == "Ští"){
+                if(item.Substring(item.Length - 2, 1) == "y"){ clovek.dodge = 60; return;}
+                clovek.dodge = ((Int32.Parse(item.Substring(item.Length - 2, 1)) - 1) * 10) + 30; return;
+            }
+            if(item.Substring(0,3) == "Meč"){
+                clovek.mindmg = (Int32.Parse(item.Substring(item.Length - 2, 1)) * 10);
+                clovek.maxdmg = (Int32.Parse(item.Substring(item.Length - 2, 1)) * 15);
+                return;
+            }
+            if(item.Substring(0,3) == "Brn"){
+                clovek.armor -= Int32.Parse(olditem.Substring(olditem.Length - 2, 1)) * 2;
+                clovek.armor += Int32.Parse(item.Substring(item.Length - 2, 1)) * 2;
+                return;
+            }
+            else{
+                clovek.armor -= Int32.Parse(olditem.Substring(olditem.Length - 2, 1));
+                clovek.armor += Int32.Parse(item.Substring(item.Length - 2, 1));
+                return;
+            }
         }
 
         public static void StageResult(List<Postava> list, List<string> drops){
@@ -723,13 +761,13 @@ namespace zapocet{
                 if(input == "á"){ if(jednotky.Length > 0){desitky="8";}else{jednotky="8";};}
                 if(input == "í"){ if(jednotky.Length > 0){desitky="9";}else{jednotky="9";};}
                 if(input == "é"){ if(jednotky.Length > 0){desitky="0";}else{jednotky="0";};}
-                if(i==rounds-1){ return Int32.Parse(jednotky+desitky);}
+                if(i==rounds-1 && jednotky != ""){ return Int32.Parse(jednotky+desitky);}
                 if(rounds==2){input=input2;}
             }
             return 0;
         }
 
-        public static Dictionary<dynamic, dynamic> Drop(Dictionary<dynamic, dynamic> data, bool giveall){
+        public static (List<string>, Dictionary<dynamic, dynamic>) Drop(Dictionary<dynamic, dynamic> data, bool giveall, List<string> dropped){
             string drop;
             int chance = Roll();
             int numberOfDrops = 1;
@@ -745,13 +783,13 @@ namespace zapocet{
                 if(data["drops"][2].Count == 0){ chance = 97;}
                 if(data["drops"][3].Count == 0 && data["drops"][2].Count == 0 && data["drops"][1].Count == 0 && data["drops"][0].Count == 0){ chance = 101;}
                 if(chance == 101){break;}
-                if(data["drops"][3].Count != 0){if(chance >= 97){ drop=DropSelect(data["drops"][3]); data["inventar"].Add(drop); data["drops"][3].Remove(drop); continue;}}
-                if(data["drops"][2].Count != 0){if(chance >= 90){ drop=DropSelect(data["drops"][2]); data["inventar"].Add(drop); data["drops"][2].Remove(drop); continue;}}
-                if(data["drops"][1].Count != 0){if(chance >= 75){ drop=DropSelect(data["drops"][1]); data["inventar"].Add(drop); data["drops"][1].Remove(drop); continue;}}
-                if(data["drops"][0].Count != 0){drop=DropSelect(data["drops"][0]); data["inventar"].Add(drop); data["drops"][0].Remove(drop);}
+                if(data["drops"][3].Count != 0){if(chance >= 97){ drop=DropSelect(data["drops"][3]); data["inventar"].Add(drop); dropped.Add(drop); data["drops"][3].Remove(drop); continue;}}
+                if(data["drops"][2].Count != 0){if(chance >= 90){ drop=DropSelect(data["drops"][2]); data["inventar"].Add(drop); dropped.Add(drop); data["drops"][2].Remove(drop); continue;}}
+                if(data["drops"][1].Count != 0){if(chance >= 75){ drop=DropSelect(data["drops"][1]); data["inventar"].Add(drop); dropped.Add(drop); data["drops"][1].Remove(drop); continue;}}
+                if(data["drops"][0].Count != 0){drop=DropSelect(data["drops"][0]); data["inventar"].Add(drop); dropped.Add(drop); data["drops"][0].Remove(drop);}
             }
             data["drops"] = DropReplenish(data["drops"]);
-            return data;
+            return (dropped, data);
 
         }
 
