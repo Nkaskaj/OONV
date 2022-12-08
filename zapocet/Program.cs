@@ -102,13 +102,17 @@ namespace zapocet{
                     monstraList = SpawnEnemy(kasarna, monsterBuilder, data["stage"]);
                 }
                 
-                if(data["stage"] == 4) {run = false;}
-                //Balance, pravidla
+                if(data["stage"] == 10) {run = false;}
+                //pravidla
             }
             if(lose){
-                System.Console.WriteLine("PROHRAL SI!");
+                Console.Clear();
+                System.Console.WriteLine("                --->    Prohrál si!    <---");
+                System.Console.WriteLine("                --->    Stage: " + data["stage"] + "!    <---");
             }else{
-                System.Console.WriteLine("VYHRAL SI!");
+                Console.Clear();
+                System.Console.WriteLine("                --->    Vyhrál si!    <---");
+                System.Console.WriteLine("                --->    Stage: 10!    <---");
             }
         }
 
@@ -367,10 +371,10 @@ namespace zapocet{
                 System.Console.WriteLine(postava.inventar["Štít"] + " (" + postava.dodge.ToString() + " %)");
             }
             if(postava.inventar["Scroll"] != ""){
-                System.Console.WriteLine(postava.inventar["Scroll"] + " (" + (60*Int32.Parse(postava.inventar["Scroll"].Substring(postava.inventar["Scroll"].Length - 2, 1))).ToString() + " damage)");
+                if(postava.inventar["Scroll"].Substring(postava.inventar["Scroll"].Length - 2, 1) == "y"){ System.Console.WriteLine(postava.inventar["Scroll"] + " (240 damage)");}else{System.Console.WriteLine(postava.inventar["Scroll"] + " (" + (60*Int32.Parse(postava.inventar["Scroll"].Substring(postava.inventar["Scroll"].Length - 2, 1))).ToString() + " damage)");};
             }
             if(postava.inventar["Luk"] != ""){
-                System.Console.WriteLine(postava.inventar["Luk"] + " (" + (30*Int32.Parse(postava.inventar["Luk"].Substring(postava.inventar["Luk"].Length - 2, 1))).ToString() + " damage)");
+                if(postava.inventar["Luk"].Substring(postava.inventar["Luk"].Length - 2, 1) == "y"){ System.Console.WriteLine(postava.inventar["Luk"] + " (120 damage)");}else{System.Console.WriteLine(postava.inventar["Luk"] + " (" + (30*Int32.Parse(postava.inventar["Luk"].Substring(postava.inventar["Luk"].Length - 2, 1))).ToString() + " damage)");};
             }
             if(postava.inventar["Luk"] != ""){
                 System.Console.WriteLine("Toulec: " + postava.inventar["Toulec"]);
@@ -422,8 +426,23 @@ namespace zapocet{
 
         public static void RulesMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
-            System.Console.WriteLine("   ---> Pravidla <---   ");
-            System.Console.WriteLine();
+            System.Console.WriteLine("                ---> Pravidla <---   ");
+            System.Console.WriteLine("- Hra má dohromady 10 stagí a jedná se o RNG based tahovou hru");
+            System.Console.WriteLine("- V menu se můžeš pohybovat i pomocí české klávesnice (1=+,2=ě,3=š,...)");
+            System.Console.WriteLine("- Nejdříve útočíš do nepřátelské postavy, poté ona útočí do tebe");
+            System.Console.WriteLine("- Tvá bojová skupina se skládá z Warriora, Mága a Archera a každá postava má unikátní zbraň");
+            System.Console.WriteLine("- Warrior má štít, který mu přidává šanci na vyhnutí se útoku");
+            System.Console.WriteLine("- Mág má scroll, kterým může za 70 many způsobit dodatečné poškození");
+            System.Console.WriteLine("- Archer má luk, ze kterého střílí z dálky, a tak do něj nemůže nikdo zblízka zaútočit");
+            System.Console.WriteLine("- Po skončení kola se tvoji hrdinové vyléčí o 35 HP, Mág získá 100 many a Archer získá 3 šípy");
+            System.Console.WriteLine("- Po skončení kola máš šanci na 1-5 dropů různých rarit (Tier 1-3 nebo Legendary)");
+            System.Console.WriteLine("- Vybavitelnými předměty můžeš vybavit každého ze své skupiny");
+            System.Console.WriteLine("- Po vybavení nemůžeš předmět z postavy sundat (lze ho jen vyměnit)");
+            System.Console.WriteLine("- Aktivovatelné předměty můžeš použít mezi stagí");
+            System.Console.WriteLine("- Vybavitelné předměty mají omezený drop (pro více info koukni do tabu Šance na dropy)");
+            System.Console.WriteLine("");
+            System.Console.WriteLine("- Pro získání všech předmětů napiš příkaz 'giveall' v Menu");
+            System.Console.WriteLine("");
 
             System.Console.WriteLine("1) Zpět");
             switch(Console.ReadLine()){
@@ -976,27 +995,27 @@ namespace zapocet{
         }
         public void PridejPrilbu(){
             this._monsterpostava.inventar["Přilba"] = "Monster přilba [" + this._monsterpostava.multiplier.ToString() + "]";
-            this._monsterpostava.armor += (1 * this._monsterpostava.multiplier) / 2;
+            this._monsterpostava.armor += 1 + this._monsterpostava.multiplier - 2;
         }
         public void PridejBrneni(){
             this._monsterpostava.inventar["Brnění"] = "Monster brnění [" + this._monsterpostava.multiplier.ToString() + "]";
-            this._monsterpostava.armor += (2 * this._monsterpostava.multiplier) / 2;
+            this._monsterpostava.armor += 2 + this._monsterpostava.multiplier - 2;
         }
         public void PridejChranice(){
-            this._monsterpostava.inventar["Chrániče"] = "Monster chrániče [" + this._monsterpostava.multiplier.ToString() + "]";
-            this._monsterpostava.armor += (1 * this._monsterpostava.multiplier) / 2;
+            this._monsterpostava.inventar["Chrániče"] = "Monster chrániče [Tier " + this._monsterpostava.multiplier.ToString() + "]";
+            this._monsterpostava.armor += 1 + this._monsterpostava.multiplier - 2;
         }
         public void PridejMec(){
-            this._monsterpostava.inventar["Zbraň"] = "Monster meč [" + this._monsterpostava.multiplier.ToString() + "]";
-            this._monsterpostava.mindmg = (10 * this._monsterpostava.multiplier) / 2;
-            this._monsterpostava.maxdmg = (15 * this._monsterpostava.multiplier) / 2;
+            this._monsterpostava.inventar["Zbraň"] = "Monster meč [Tier " + this._monsterpostava.multiplier.ToString() + "]";
+            this._monsterpostava.mindmg = 5 + (this._monsterpostava.multiplier - 2) * 2;
+            this._monsterpostava.maxdmg = 10 + (this._monsterpostava.multiplier - 2) * 2;
         }
         public void PridejStit(){
             this._monsterpostava.inventar["Štít"] = "Monster štít";
             this._monsterpostava.dodge = 20;
         }
         public void PridejLuk(){
-            this._monsterpostava.inventar["Luk"] = "Monster luk [1]";
+            this._monsterpostava.inventar["Luk"] = "Monster luk [Tier 1]";
         }
         public void PridejNaNSipy(){
             this._monsterpostava.inventar["Toulec"] = "0";
@@ -1005,7 +1024,7 @@ namespace zapocet{
             this._monsterpostava.inventar["Toulec"] = "1";
         }
         public void PridejScroll(){
-            this._monsterpostava.inventar["Scroll"] = "Monster scroll [1]";
+            this._monsterpostava.inventar["Scroll"] = "Monster scroll [Tier 1]";
             this._monsterpostava.mana = 50;
         }
     }
