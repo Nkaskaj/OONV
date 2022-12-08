@@ -35,62 +35,68 @@ namespace zapocet{
             List<Postava> monstraList = new List<Postava>();
             monstraList = SpawnEnemy(kasarna, monsterBuilder, stage);
             
+            Dictionary<dynamic, dynamic> data = new Dictionary<dynamic, dynamic>();
+            data.Add("lidiList", lideList);
+            data.Add("stage", stage);
+            data.Add("inventar", inventar);
+            data.Add("drops", drops);
+            data.Add("hrob", hrob);
+
             while(run == true){
-                inventar = MainMenu(lideList, stage.ToString(), inventar, drops);
+                inventar = MainMenu(data);
                 stageRun = true;
                 while(stageRun == true){
                     lukSkip = false;
 
-                    lukSkip = Luk(lideList[0], monstraList[0]);
+                    lukSkip = Luk(data["lidiList"][0], monstraList[0]);
                     
                     if(lukSkip == false){
-                        Round(lideList[0], monstraList[0]);
-                        stageRun = WinCheck(monstraList,lideList,hrob);
+                        Round(data["lidiList"][0], monstraList[0]);
+                        stageRun = WinCheck(monstraList,data["lidiList"],data["hrob"]);
                         if(stageRun == false) {break;}
-                        Spell(lideList[0], monstraList[0]);
-                        stageRun = WinCheck(monstraList,lideList,hrob);
+                        Spell(data["lidiList"][0], monstraList[0]);
+                        stageRun = WinCheck(monstraList,data["lidiList"],data["hrob"]);
 
                         if(stageRun == false) {break;}
                        
-                        Round(monstraList[0], lideList[0]);
-                        stageRun = WinCheck(lideList,monstraList,hrob);
+                        Round(monstraList[0], data["lidiList"][0]);
+                        stageRun = WinCheck(data["lidiList"],monstraList,data["hrob"]);
                         if(stageRun == false) {break;}
-                        Spell(monstraList[0], lideList[0]);
-                        stageRun = WinCheck(lideList,monstraList,hrob);
+                        Spell(monstraList[0], data["lidiList"][0]);
+                        stageRun = WinCheck(data["lidiList"],monstraList,data["hrob"]);
                     }
-                    stageRun = WinCheck(lideList,monstraList,hrob);
-                    stageRun = WinCheck(monstraList,lideList,hrob);
+                    stageRun = WinCheck(data["lidiList"],monstraList,data["hrob"]);
+                    stageRun = WinCheck(monstraList,data["lidiList"],data["hrob"]);
                     
                     if(stageRun == false) {break;}
 
-                    lideList = ChangePos(lideList);
+                    data["lidiList"] = ChangePos(data["lidiList"]);
                     monstraList = ChangePos(monstraList);
                     System.Console.WriteLine();
                     
                 }
                 System.Console.WriteLine();
-                System.Console.WriteLine("                ---> Stage " + stage.ToString() + " dohrána <---   ");
+                System.Console.WriteLine("                ---> Stage " + data["stage"].ToString() + " dohrána <---   ");
                 Console.ReadLine();
-                lose = LoseCheck(lideList);
+                lose = LoseCheck(data["lidiList"]);
                 if(lose){
                     run = false;
                 }else{
-                    stage += 1;
-                    (dropped, drops) = Drop(drops, false);
+                    data["stage"] += 1;
+                    (dropped, data["drops"]) = Drop(data, false);
                     foreach(string item in dropped){
-                        inventar.Add(item);
+                        data["inventar"].Add(item);
                     }
                     
-                    StageResult(lideList, dropped);
+                    StageResult(data["lidiList"], dropped);
                     Console.ReadLine();
 
-                    monstraList = SpawnEnemy(kasarna, monsterBuilder, stage);
+                    monstraList = SpawnEnemy(kasarna, monsterBuilder, data["stage"]);
                 }
                 
-                if(stage == 4) {run = false;}
-                //Aktivky, Equipy->Select->Postavy + Zpět->Chcete vyměnit X za Y? + Zpět (Pokud Unique na postavu, rovnou vyměnit X za Y), fighty po jednom + přeskočit, opravit giveall
+                if(data["stage"] == 4) {run = false;}
+                //Equipy->Select->Postavy + Zpět->Chcete vyměnit X za Y? + Zpět (Pokud Unique na postavu, rovnou vyměnit X za Y), fighty po jednom + přeskočit, opravit giveall
                 //Itemy: Armor Ts, Zbrane Ts, Stit Ts
-                //Bonusy: Full Regen HP+MANA, Revive, Pomocník
             }
             if(lose){
                 System.Console.WriteLine("PROHRAL SI!");
@@ -237,18 +243,22 @@ namespace zapocet{
         }
 
         public static void Revive(List<Postava> list, Postava postava){
+            postava.hp = 100;
+            if(postava.mana != -1){
+                postava.mana = 100;
+            }
             list.Add(postava);
             Console.Clear();
             System.Console.WriteLine("Postava " + postava.jmeno + " byla vzkříšena!");
             Console.ReadLine();
         }
 
-        public static List<string> MainMenu(List<Postava> lidiList, string stage, List<string> inventar, List<List<string>> drops){
+        public static List<string> MainMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             System.Console.WriteLine("   ---> Menu <---   ");
-            System.Console.WriteLine("1) Spustit stage " + stage);
+            System.Console.WriteLine("1) Spustit stage " + data["stage"]);
             System.Console.WriteLine("2) Postavy");
-            System.Console.WriteLine("3) Předměty (" + inventar.Count().ToString() + ")");
+            System.Console.WriteLine("3) Předměty (" + data["inventar"].Count.ToString() + ")");
             System.Console.WriteLine("4) Šance na dropy");
             System.Console.WriteLine("5) Pravidla");
             System.Console.WriteLine();
@@ -256,40 +266,40 @@ namespace zapocet{
             switch(Console.ReadLine()){
                 case "1":
                 case "+":
-                    return inventar;
+                    return data["inventar"];
                 case "2":
                 case "ě":
-                    InventarMenu(lidiList, stage, inventar, drops);
-                    return inventar;
+                    InventarMenu(data);
+                    return data["inventar"];
                 case "3":
                 case "š":
-                    HracuvInventar(lidiList, stage, inventar, drops);
-                    return inventar;
+                    HracuvInventar(data);
+                    return data["inventar"];
                 case "4":
                 case "č":
-                    ChancesMenu(lidiList, stage, inventar, drops);
-                    return inventar;
+                    ChancesMenu(data);
+                    return data["inventar"];
                 case "5":
                 case "ř":
-                    RulesMenu(lidiList, stage, inventar, drops);
-                    return inventar;
+                    RulesMenu(data);
+                    return data["inventar"];
                 case "giveall":
-                    (inventar, drops) = Drop(drops, true);
-                    MainMenu(lidiList, stage, inventar, drops);
-                    return inventar;
+                    (data["inventar"], data["drops"]) = Drop(data, true);
+                    MainMenu(data);
+                    return data["inventar"];
                 default:
-                    MainMenu(lidiList, stage, inventar, drops);
-                    return inventar;
+                    MainMenu(data);
+                    return data["inventar"];
             }
         }
 
-        public static void InventarMenu(List<Postava> lidiList, string stage, List<string> inventar, List<List<string>> drops){
+        public static void InventarMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             System.Console.WriteLine("   ---> Postavy <---   ");
             int i = 0;
             int key = 0;
             string input;
-            foreach(Postava clovek in lidiList){
+            foreach(Postava clovek in data["lidiList"]){
                 i += 1;
                 System.Console.WriteLine(i.ToString() + ") " + clovek.jmeno + " [" + clovek.hp + "]");
             }
@@ -301,16 +311,16 @@ namespace zapocet{
             }
             key = Parser(input);
             if(key == i+1){
-                MainMenu(lidiList, stage, inventar, drops);
+                MainMenu(data);
             }else if(key == 0 || key > i+1){
-                InventarMenu(lidiList, stage, inventar, drops);
+                InventarMenu(data);
             }else{
-                InventarONMenu(lidiList[key-1], lidiList, stage, inventar, drops);
+                InventarONMenu(data["lidiList"][key-1], data);
             }
             
         }
 
-        public static void InventarONMenu(Postava clovek, List<Postava> lidiList, string stage, List<string> inventar, List<List<string>> drops){
+        public static void InventarONMenu(Postava clovek, Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             Inventar(clovek);
             System.Console.WriteLine();
@@ -318,10 +328,10 @@ namespace zapocet{
             switch(Console.ReadLine()){
                 case "1":
                 case "+":
-                    InventarMenu(lidiList, stage, inventar, drops);
+                    InventarMenu(data);
                     return;
                 default:
-                    InventarONMenu(clovek, lidiList, stage, inventar, drops);
+                    InventarONMenu(clovek, data);
                     return;
             }
         }
@@ -351,7 +361,7 @@ namespace zapocet{
 
         
 
-        public static void ChancesMenu(List<Postava> lidiList, string stage, List<string> inventar, List<List<string>> drops){
+        public static void ChancesMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             System.Console.WriteLine("   ---> Šance na N dropů <---   ");
             System.Console.WriteLine("- 1 drop  100 %");
@@ -361,39 +371,39 @@ namespace zapocet{
             System.Console.WriteLine("- 5 dropů 5 %");
             System.Console.WriteLine();
             System.Console.WriteLine("   ---> Dostupné Tier 1 (100 %) dropy <---   ");
-            foreach(string drop in drops[0]){
+            foreach(string drop in data["drops"][0]){
                 System.Console.WriteLine("- " + drop);
             }
             System.Console.WriteLine();
             System.Console.WriteLine("   ---> Dostupné Tier 2 (25 %) dropy <---   ");
-            foreach(string drop in drops[1]){
+            foreach(string drop in data["drops"][1]){
                 System.Console.WriteLine("- " + drop);
             }
             System.Console.WriteLine();
             System.Console.WriteLine("   ---> Dostupné Tier 3 (10 %) dropy <---   ");
-            foreach(string drop in drops[2]){
+            foreach(string drop in data["drops"][2]){
                 System.Console.WriteLine("- " + drop);
             }
             System.Console.WriteLine();
             System.Console.WriteLine("   ---> Dostupné Legendary (3 %) dropy <---   ");
-            foreach(string drop in drops[3]){
+            foreach(string drop in data["drops"][3]){
                 System.Console.WriteLine("- " + drop);
             }
-            if(drops[3].Count == 0){System.Console.WriteLine("- Žádné dropy nejsou dostupné");}
+            if(data["drops"][3].Count == 0){System.Console.WriteLine("- Žádné dropy nejsou dostupné");}
             System.Console.WriteLine();
             System.Console.WriteLine("1) Zpět");
             switch(Console.ReadLine()){
                 case "1":
                 case "+": 
-                    MainMenu(lidiList, stage, inventar, drops);
+                    MainMenu(data);
                     return;
                 default:
-                    ChancesMenu(lidiList, stage, inventar, drops);
+                    ChancesMenu(data);
                     return;
             }
         }
 
-        public static void RulesMenu(List<Postava> lidiList, string stage, List<string> inventar, List<List<string>> drops){
+        public static void RulesMenu(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             System.Console.WriteLine("   ---> Pravidla <---   ");
             System.Console.WriteLine();
@@ -402,15 +412,15 @@ namespace zapocet{
             switch(Console.ReadLine()){
                 case "1":
                 case "+": 
-                    MainMenu(lidiList, stage, inventar, drops);
+                    MainMenu(data);
                     return;
                 default:
-                    RulesMenu(lidiList, stage, inventar, drops);
+                    RulesMenu(data);
                     return;
             }
         }
 
-        public static void HracuvInventar(List<Postava> lidiList, string stage, List<string> inventar, List<List<string>> drops){
+        public static void HracuvInventar(Dictionary<dynamic, dynamic> data){
             System.Console.Clear();
             System.Console.WriteLine("   ---> Inventář <---   ");
             System.Console.WriteLine();
@@ -420,7 +430,7 @@ namespace zapocet{
             int i = 0;
             int key = 0;
             string input;
-            foreach(string item in inventar){
+            foreach(string item in data["inventar"]){
                 if(item.Substring(0,1) == "▲"){
                     if(active){System.Console.WriteLine(" -> Aktivovatelné předměty <-  ");}
                     active = false;
@@ -429,7 +439,7 @@ namespace zapocet{
                     System.Console.WriteLine(i.ToString() +") " + item);
                 }
             }
-            foreach(string item in inventar){
+            foreach(string item in data["inventar"]){
                 if(item.Substring(0,1) != "▲"){
                     if(passive){if(active == false){System.Console.WriteLine();}System.Console.WriteLine(" -> Vybavitelné předměty <-  ");}
                     passive = false;
@@ -447,14 +457,51 @@ namespace zapocet{
             }
             key = Parser(input);
             if(key == i + 1){
-                MainMenu(lidiList, stage, inventar, drops);
+                MainMenu(data);
             }else if(key == 0 || key > i + 1){
-                HracuvInventar(lidiList, stage, inventar, drops);
+                HracuvInventar(data);
             }else{
-                System.Console.WriteLine("Vybráno: " + sortedInventar[key-1]);
-                Console.ReadLine();
-                HracuvInventar(lidiList, stage, inventar, drops);
+                UseItem(sortedInventar[key-1], data);
+                HracuvInventar(data);
             }
+        }
+
+        public static void UseItem(string item, Dictionary<dynamic, dynamic> data){
+            if(item.Substring(0,1) == "▲"){
+                if(item == "▲ Lektvar obnovy"){
+                    FullRegen(data["lidiList"]);
+                }
+                else if(item == "▲ Pomocník"){
+                    Companion(data["lidiList"]);
+                }
+                else if(item == "▲ Kámen vzkříšení"){
+                    Console.Clear();
+                    int i = 0;
+                    int key = 0;
+                    string input;
+                    foreach(Postava clovek in data["hrob"]){
+                        i++;
+                        System.Console.WriteLine(i.ToString() + ") " + clovek.jmeno + " [" + clovek.hp + "]");
+                    }
+                    System.Console.WriteLine((i+1).ToString() + ") Zpět");
+                    System.Console.WriteLine();
+                    while(true){
+                        input = Console.ReadLine();
+                        if(input != ""){break;}
+                    }
+                    key = Parser(input);
+                    if(key == i+1){
+                        HracuvInventar(data);
+                    }else if(key == 0 || key > i+1){
+                        UseItem(item, data);
+                    }else{
+                        Revive(data["lidiList"], data["hrob"][key-1]);
+                    }
+                }
+            }else{
+
+            }
+            data["inventar"].Remove(item);
         }
 
         public static void StageResult(List<Postava> list, List<string> drops){
@@ -569,7 +616,7 @@ namespace zapocet{
             return 0;
         }
 
-        public static (List<string>, List<List<string>>) Drop(List<List<string>> drops, bool giveall){
+        public static (List<string>, List<List<string>>) Drop(Dictionary<dynamic, dynamic> data, bool giveall){
             List<string> dropped = new List<string>();
             string drop;
             int chance = Roll();
@@ -581,18 +628,18 @@ namespace zapocet{
             if(giveall == true){numberOfDrops=40;}
             for(int i = 1; i <= numberOfDrops; i++){
                 chance = Roll();
-                if(drops[0].Count == 0){ chance = 75;}
-                if(drops[1].Count == 0){ chance = 90;}
-                if(drops[2].Count == 0){ chance = 97;}
-                if(drops[3].Count == 0 && drops[2].Count == 0 && drops[1].Count == 0 && drops[0].Count == 0){ chance = 101;}
+                if(data["drops"][0].Count == 0){ chance = 75;}
+                if(data["drops"][1].Count == 0){ chance = 90;}
+                if(data["drops"][2].Count == 0){ chance = 97;}
+                if(data["drops"][3].Count == 0 && data["drops"][2].Count == 0 && data["drops"][1].Count == 0 && data["drops"][0].Count == 0){ chance = 101;}
                 if(chance == 101){break;}
-                if(drops[3].Count != 0){if(chance >= 97){ drop=DropSelect(drops[3]); dropped.Add(drop); drops[3].Remove(drop); continue;}}
-                if(drops[2].Count != 0){if(chance >= 90){ drop=DropSelect(drops[2]); dropped.Add(drop); drops[2].Remove(drop); continue;}}
-                if(drops[1].Count != 0){if(chance >= 75){ drop=DropSelect(drops[1]); dropped.Add(drop); drops[1].Remove(drop); continue;}}
-                if(drops[0].Count != 0){drop=DropSelect(drops[0]); dropped.Add(drop); drops[0].Remove(drop);}
+                if(data["drops"][3].Count != 0){if(chance >= 97){ drop=DropSelect(data["drops"][3]); dropped.Add(drop); data["drops"][3].Remove(drop); continue;}}
+                if(data["drops"][2].Count != 0){if(chance >= 90){ drop=DropSelect(data["drops"][2]); dropped.Add(drop); data["drops"][2].Remove(drop); continue;}}
+                if(data["drops"][1].Count != 0){if(chance >= 75){ drop=DropSelect(data["drops"][1]); dropped.Add(drop); data["drops"][1].Remove(drop); continue;}}
+                if(data["drops"][0].Count != 0){drop=DropSelect(data["drops"][0]); dropped.Add(drop); data["drops"][0].Remove(drop);}
             }
-            drops = DropReplenish(drops);
-            return (dropped, drops);
+            data["drops"] = DropReplenish(data["drops"]);
+            return (dropped, data["drops"]);
 
         }
 
