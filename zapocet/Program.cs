@@ -108,10 +108,12 @@ namespace zapocet{
                 Console.Clear();
                 System.Console.WriteLine("                --->    Prohrál si!    <---");
                 System.Console.WriteLine("                --->    Stage: " + data["stage"] + "!    <---");
+                Console.ReadLine();
             }else{
                 Console.Clear();
                 System.Console.WriteLine("                --->    Vyhrál si!    <---");
                 System.Console.WriteLine("                --->    Stage: 10!    <---");
+                Console.ReadLine();
             }
         }
 

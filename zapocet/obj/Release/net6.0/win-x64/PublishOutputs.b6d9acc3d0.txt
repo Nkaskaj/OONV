@@ -1,0 +1,2 @@
+X:\Windows složky\Desktop\OONV\zapocet\bin\Release\net6.0\win-x64\publish\zapocet.pdb
+X:\Windows složky\Desktop\OONV\zapocet\bin\Release\net6.0\win-x64\publish\zapocet.exe
