@@ -104,16 +104,19 @@ namespace zapocet{
                 
                 if(data["stage"] == 10) {run = false;}
             }
+            Console.Clear();
             if(lose){
-                Console.Clear();
                 System.Console.WriteLine("                --->    Prohrál si!    <---");
-                System.Console.WriteLine("                --->    Stage: " + data["stage"] + "!    <---");
-                Console.ReadLine();
             }else{
-                Console.Clear();
                 System.Console.WriteLine("                --->    Vyhrál si!    <---");
-                System.Console.WriteLine("                --->    Stage: 10!    <---");
-                Console.ReadLine();
+            }
+            for(int i = 0; i < 2; i++){System.Console.WriteLine();}
+            System.Console.WriteLine("                --->    Stage: " + data["stage"] + "!    <---");
+            System.Console.WriteLine();
+            System.Console.WriteLine("          Pokud chcete hrát znovu stiskněte 1!");
+            input = Console.ReadLine();
+            if(input == "1" || input == "+"){
+                Main(args);
             }
         }
 
